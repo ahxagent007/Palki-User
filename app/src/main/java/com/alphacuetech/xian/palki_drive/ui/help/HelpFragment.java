@@ -24,8 +24,8 @@ private FragmentHelpBinding binding;
     binding = FragmentHelpBinding.inflate(inflater, container, false);
     View root = binding.getRoot();
 
-        final TextView textView = binding.textHelp;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        /*final TextView textView = binding.textHelp;
+        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);*/
         return root;
     }
 

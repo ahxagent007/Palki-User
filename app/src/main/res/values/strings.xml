@@ -20,4 +20,14 @@
 
     <string name="dummy_name">Abir Hossain Xian</string>
     <string name="dummy_number">01673398900</string>
+
+    <string name="help_howtouse">How To Use App</string>
+    <string name="help_privacy_policy">Privacy Policy</string>
+    <string name="help_terms">Terms &amp; Condition</string>
+    <string name="help_faq">FAQ</string>
+    <string name="help_visitus">Visit Our Website</string>
+    <string name="help_email">Email</string>
+    <string name="help_call_center">Call Center</string>
+
+
 </resources>
