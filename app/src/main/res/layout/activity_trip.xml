@@ -18,6 +18,7 @@
         android:background="@color/yellow"/>
 
     <LinearLayout
+        android:id="@+id/LL_sedan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -55,6 +56,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LL_premium_sedan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -92,6 +94,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LL_mini_microbus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -129,6 +132,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LL_microbus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -166,6 +170,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LL_minibus"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -203,6 +208,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/LL_bike"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
