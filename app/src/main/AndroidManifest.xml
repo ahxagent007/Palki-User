@@ -46,7 +46,7 @@
             android:name=".Activities.TripActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Activities.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.PalkiDrive.NoActionBar"></activity>
     </application>

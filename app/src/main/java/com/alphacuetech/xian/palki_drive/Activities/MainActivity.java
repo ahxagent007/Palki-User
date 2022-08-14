@@ -1,8 +1,10 @@
-package com.alphacuetech.xian.palki_drive;
+package com.alphacuetech.xian.palki_drive.Activities;
 
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+
+import com.alphacuetech.xian.palki_drive.R;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import androidx.navigation.NavController;
