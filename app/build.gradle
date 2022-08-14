@@ -60,4 +60,7 @@ dependencies {
     //For maps
     implementation 'com.android.volley:volley:1.2.1'
 
+    //App Check
+    implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
+
 }

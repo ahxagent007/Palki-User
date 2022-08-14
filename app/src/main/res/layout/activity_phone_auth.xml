@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.PhoneAuthActivity"
+    android:orientation="vertical"
+    android:background="@color/dark_yellow"
+    android:focusableInTouchMode="true"
+    android:gravity="center">
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/common_google_signin_btn_icon_dark"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:padding="10dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/my_caption_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Please enter verification code.."
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            tools:layout_editor_absoluteX="91dp"
+            tools:layout_editor_absoluteY="164dp"
+            android:textAlignment="viewStart"
+            app:layout_constraintBottom_toBottomOf="@+id/slider_background"
+            tools:ignore="MissingConstraints"
+            android:padding="20dp"/>
+    </LinearLayout>
+
+
+
+    <EditText
+        android:id="@+id/ET_phoneNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_bg_white"
+        android:hint="Verification Code"
+        android:gravity="center"
+        android:inputType="number"
+        android:padding="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_generateOTPBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Resend verification code..."
+        android:gravity="end"
+        android:paddingEnd="10dp"
+        android:layout_margin="5dp"
+        android:textStyle="bold|italic"
+        android:textColor="@color/dark_blue"/>
+
+    <Button
+        android:id="@+id/btn_verifyOTPBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:layout_margin="10dp"
+        android:background="@drawable/round_bg_blue"/>
+
+</LinearLayout>
