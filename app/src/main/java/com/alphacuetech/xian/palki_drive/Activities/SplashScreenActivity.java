@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.alphacuetech.xian.palki_drive.R;
+import com.alphacuetech.xian.palki_drive.SharedPreff;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.appcheck.FirebaseAppCheck;
 import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
@@ -23,7 +24,13 @@ public class SplashScreenActivity extends AppCompatActivity {
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             public void run() {
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+
+                if (!new SharedPreff(getApplicationContext()).getFirebaseUID().equals("#")){
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+                }else{
+                    startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                }
 
                 finish();
             }
