@@ -21,12 +21,12 @@
 
     <Button
         android:id="@+id/btn_findTrip"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:background="@drawable/round_bg_blue"
-        android:text="Find Trip"/>
+        android:text="Find Trip" />
 
 
 </RelativeLayout>

@@ -93,6 +93,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_findTrip = findViewById(R.id.btn_findTrip);
         btn_findTrip.setVisibility(View.GONE);
 
+        MarkerPoints = new ArrayList<>();
+
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -117,6 +119,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng selectedLatLong = place.getLatLng();
 
                 selectedPlace = place;
+                dest = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
 
                 // TODO: Get info about the selected place.
                 Log.i(TAG, "onPlaceSelected Place: " + place.getName() + ", " + place.getId() + ", LAT LONG " + selectedLatLong.toString());
@@ -141,7 +144,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_findTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
             }
         });
 
@@ -165,6 +167,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
+        mMap.setMyLocationEnabled(true);
+
+        if (mMap != null) {
+            mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+                @Override
+                public void onMyLocationChange(Location arg0) {
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Current Location"));
+                    start = new LatLng(arg0.getLatitude(), arg0.getLongitude());
+                }
+            });
+        }
 
         /*LatLng testLatLng = new LatLng(-34, 151);
         // Add a marker in Sydney and move the camera
@@ -262,16 +275,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 break;
         }};
 
-    public void checkPermission(){
+    public void checkPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                Log.i(TAG, "Permission OK!");
                 mMap.setMyLocationEnabled(true);
-            } else {
-                requestPermissions(new String[]{
-                        Manifest.permission.ACCESS_FINE_LOCATION,
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_BACKGROUND_LOCATION
-                }, LOCATION_PERMISSION_REQUEST_CODE);  // Comment 26
+
+                if (mMap != null) {
+                    mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
+                        @Override
+                        public void onMyLocationChange(Location arg0) {
+                            mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
+                        }
+                    });
+
+                } else {
+                    requestPermissions(new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION,
+                            Manifest.permission.ACCESS_BACKGROUND_LOCATION
+                    }, LOCATION_PERMISSION_REQUEST_CODE);
+                }
             }
         }
     }
@@ -290,7 +314,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void mapOperations(){
 
-        Log.d("Map operations called","Hope");
+        Log.d(TAG,"Hope");
 
         LatLng point = start;
 
@@ -302,28 +326,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         // Adding new item to the ArrayList
         MarkerPoints.add(start);
-
-        // adding destination from database
-        LocationsDB db = new LocationsDB(MapsActivity.this);
-        String loc = db.getTermValues();
-        Log.d("location from db",loc);
-        String[] separated = loc.split(" ");
-
-
-
-        //try {
-        Double lt = Double.parseDouble(separated[0]);
-        Double ln = Double.parseDouble(separated[1]);
-        dest = new LatLng(lt,ln);
-
-
-
         MarkerPoints.add(dest);
-        //}
-        //catch(Exception e) {
-        //   Log.d("Wrong target location", e.toString());
-        //}
-
 
         // Creating MarkerOptions
         MarkerOptions options = new MarkerOptions();
@@ -362,7 +365,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
             mMap.animateCamera(CameraUpdateFactory.zoomTo(11));
         }
-
 
     }
 
@@ -478,17 +480,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             try {
                 jObject = new JSONObject(jsonData[0]);
-                Log.d("ParserTask",jsonData[0].toString());
+                Log.d(TAG,jsonData[0].toString());
                 DataParser parser = new DataParser();
-                Log.d("ParserTask", parser.toString());
+                Log.d(TAG, parser.toString());
 
                 // Starts parsing data
                 routes = parser.parse(jObject);
-                Log.d("ParserTask","Executing routes");
-                Log.d("ParserTask",routes.toString());
+                Log.d(TAG,"Executing routes");
+                Log.d(TAG,routes.toString());
 
             } catch (Exception e) {
-                Log.d("ParserTask",e.toString());
+                Log.d(TAG,e.toString());
                 e.printStackTrace();
             }
             return routes;
