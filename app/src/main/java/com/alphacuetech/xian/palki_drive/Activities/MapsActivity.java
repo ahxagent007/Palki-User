@@ -381,8 +381,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Sensor enabled
         String sensor = "sensor=false";
 
+        // Key
+        String key = "key=" + getString(R.string.maps_api_key);
+
         // Building the parameters to the web service
-        String parameters = str_origin + "&" + str_dest + "&" + sensor;
+        String parameters = str_origin + "&" + str_dest + "&" + sensor+ "&" + key;;
 
         // Output format
         String output = "json";
