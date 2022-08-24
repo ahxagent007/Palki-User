@@ -144,6 +144,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_findTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent at = new Intent(getApplicationContext(), ConfirmActivity.class);
+
+                startActivity(at);
             }
         });
 

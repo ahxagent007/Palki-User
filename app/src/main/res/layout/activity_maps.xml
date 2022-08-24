@@ -26,7 +26,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@drawable/round_bg_blue"
-        android:text="Find Trip" />
+        android:text="Find Trip"
+        android:textColor="@color/white"/>
 
 
 </RelativeLayout>
