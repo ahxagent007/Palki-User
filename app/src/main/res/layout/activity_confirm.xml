@@ -201,15 +201,19 @@
                 android:weightSum="10">
 
                 <EditText
-                    android:id="@+id/Birthday"
+                    android:id="@+id/dpc_date"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:clickable="false"
                     android:cursorVisible="false"
                     android:focusable="false"
                     android:focusableInTouchMode="false"
-                    android:hint="Date"
-                    android:layout_weight="5"/>
+                    android:hint="Set a Date"
+                    android:textStyle="bold"
+                    android:textColorHint="@color/black"
+                    android:layout_weight="10"
+                    android:gravity="center"/>
+
 
 
             </LinearLayout>
@@ -253,6 +257,18 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:id="@+id/LL_roundTrip">
+
+                <EditText
+                    android:id="@+id/ET_comment"
+                    android:gravity="top|left"
+                    android:inputType="textMultiLine"
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:lines="5"
+                    android:scrollHorizontally="false"
+                    android:hint="Any instructions?"
+                    />
+
 
             </LinearLayout>
 

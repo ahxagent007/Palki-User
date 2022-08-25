@@ -18,12 +18,15 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationRequest;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
@@ -34,6 +37,7 @@ import android.widget.Toast;
 import com.alphacuetech.xian.palki_drive.DataParser;
 import com.alphacuetech.xian.palki_drive.R;
 import com.alphacuetech.xian.palki_drive.databinding.ActivityMapsBinding;
+import com.alphacuetech.xian.palki_drive.utills.getReverseGeoCoding;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -53,6 +57,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -82,6 +87,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button btn_findTrip;
 
     Place selectedPlace;
+    String destinationName, currentPositionName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -123,7 +129,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 // TODO: Get info about the selected place.
                 Log.i(TAG, "onPlaceSelected Place: " + place.getName() + ", " + place.getId() + ", LAT LONG " + selectedLatLong.toString());
-
+                destinationName = place.getName();
                 mMap.addMarker(new MarkerOptions().position(selectedLatLong).title(place.getName()));
                 mMap.moveCamera(CameraUpdateFactory.newLatLng(selectedLatLong));
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(selectedLatLong, 16f));
@@ -146,6 +152,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 Intent at = new Intent(getApplicationContext(), ConfirmActivity.class);
 
+                HashMap<String, String> selectedDATA = new HashMap<String, String>();
+                selectedDATA.put("MODEL", "Sedan");
+                selectedDATA.put("START", destinationName);
+                selectedDATA.put("END", currentPositionName);
+
+                Gson gson = new Gson();
+
+                //transform a java object to json
+                System.out.println("json =" + gson.toJson(HashMap.class).toString());
+
+                String json_data = gson.toJson(HashMap.class).toString();
+
+                at.putExtra("JSON_DATA",json_data);
                 startActivity(at);
             }
         });
@@ -176,7 +195,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                 @Override
                 public void onMyLocationChange(Location arg0) {
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Current Location"));
+                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+
+                    final String[] address = {"Current"};
+
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    List<Address> addresses  = null;
+                                    /*addresses = geocoder.getFromLocation(arg0.getLatitude(),arg0.getLongitude(), 1);
+
+                                    address[0] = addresses.get(0).getAddressLine(0);
+
+                                    currentPositionName = address[0];
+
+                                    String city = addresses.get(0).getLocality();
+                                    String state = addresses.get(0).getAdminArea();
+                                    String zip = addresses.get(0).getPostalCode();
+                                    String country = addresses.get(0).getCountryName();*/
+                                    currentPositionName = new getReverseGeoCoding().getAddress(""+arg0.getLatitude(), ""+arg0.getLongitude());
+
+                                }
+                            });
+                        }
+                    }, 100);
+
+
+
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title(address[0]));
                     start = new LatLng(arg0.getLatitude(), arg0.getLongitude());
                 }
             });
@@ -288,7 +338,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                         @Override
                         public void onMyLocationChange(Location arg0) {
-                            mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("It's Me!"));
+                            mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Current Location"));
                         }
                     });
 

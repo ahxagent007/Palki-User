@@ -30,6 +30,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+
+    packagingOptions {
+        resources.excludes.add("META-INF/*")
+    }
 }
 
 dependencies {
@@ -62,5 +66,11 @@ dependencies {
 
     //App Check
     implementation 'com.google.firebase:firebase-appcheck-safetynet:16.0.0'
+
+    //gson
+    implementation 'com.google.code.gson:gson:2.9.1'
+
+    implementation 'org.apache.httpcomponents:httpcore:4.4.10'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.6'
 
 }
