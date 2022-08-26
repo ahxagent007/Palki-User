@@ -17,6 +17,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alphacuetech.xian.palki_drive.R;
+import com.alphacuetech.xian.palki_drive.utills.MapsDataModel;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -61,11 +62,11 @@ public class ConfirmActivity extends AppCompatActivity {
         String json_data = getIntent().getStringExtra("JSON_DATA");
         Gson gson = new Gson();
         //Transform a json to java object
-        HashMap<String, String> selectedData = gson.fromJson(json_data, HashMap.class);
+        MapsDataModel selectedData = gson.fromJson(json_data, MapsDataModel.class);
 
-        TV_carModel.setText(selectedData.get("MODEL"));
-        TV_pickupPoint.setText(selectedData.get("START"));
-        TV_dropPoint.setText(selectedData.get("END"));
+        TV_carModel.setText(selectedData.getMODEL());
+        TV_pickupPoint.setText(selectedData.getSTART());
+        TV_dropPoint.setText(selectedData.getEND());
 
         S_date.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -121,4 +122,6 @@ public class ConfirmActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         dpc_date.setText(dateFormat.format(myCalendar.getTime()));
     }
+
+
 }

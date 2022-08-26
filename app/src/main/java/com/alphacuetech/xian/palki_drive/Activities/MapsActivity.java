@@ -37,6 +37,7 @@ import android.widget.Toast;
 import com.alphacuetech.xian.palki_drive.DataParser;
 import com.alphacuetech.xian.palki_drive.R;
 import com.alphacuetech.xian.palki_drive.databinding.ActivityMapsBinding;
+import com.alphacuetech.xian.palki_drive.utills.MapsDataModel;
 import com.alphacuetech.xian.palki_drive.utills.getReverseGeoCoding;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
@@ -88,6 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     Place selectedPlace;
     String destinationName, currentPositionName;
+    String getDestinationPlaceID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 LatLng selectedLatLong = place.getLatLng();
 
                 selectedPlace = place;
-                dest = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
+                destLatLng = new LatLng(place.getLatLng().latitude, place.getLatLng().longitude);
 
                 // TODO: Get info about the selected place.
                 Log.i(TAG, "onPlaceSelected Place: " + place.getName() + ", " + place.getId() + ", LAT LONG " + selectedLatLong.toString());
@@ -152,17 +154,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 Intent at = new Intent(getApplicationContext(), ConfirmActivity.class);
 
-                HashMap<String, String> selectedDATA = new HashMap<String, String>();
-                selectedDATA.put("MODEL", "Sedan");
-                selectedDATA.put("START", destinationName);
-                selectedDATA.put("END", currentPositionName);
+                MapsDataModel Data = new MapsDataModel("Sedan", currentPositionName, destinationName, currentLatLng, destLatLng);
+
 
                 Gson gson = new Gson();
 
                 //transform a java object to json
-                System.out.println("json =" + gson.toJson(HashMap.class).toString());
+                System.out.println("json =" + gson.toJson(Data).toString());
 
-                String json_data = gson.toJson(HashMap.class).toString();
+                String json_data = gson.toJson(Data).toString();
 
                 at.putExtra("JSON_DATA",json_data);
                 startActivity(at);
@@ -195,39 +195,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                 @Override
                 public void onMyLocationChange(Location arg0) {
-                    Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                    //Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                    currentPositionUpdate(arg0);
 
-                    final String[] address = {"Current"};
-
-                    Handler handler = new Handler();
+                    /*Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    List<Address> addresses  = null;
-                                    /*addresses = geocoder.getFromLocation(arg0.getLatitude(),arg0.getLongitude(), 1);
-
-                                    address[0] = addresses.get(0).getAddressLine(0);
-
-                                    currentPositionName = address[0];
-
-                                    String city = addresses.get(0).getLocality();
-                                    String state = addresses.get(0).getAdminArea();
-                                    String zip = addresses.get(0).getPostalCode();
-                                    String country = addresses.get(0).getCountryName();*/
-                                    currentPositionName = new getReverseGeoCoding().getAddress(""+arg0.getLatitude(), ""+arg0.getLongitude());
 
                                 }
                             });
                         }
-                    }, 100);
+                    }, 100);*/
 
 
 
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title(address[0]));
-                    start = new LatLng(arg0.getLatitude(), arg0.getLongitude());
+
                 }
             });
         }
@@ -240,6 +226,71 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(testLatLng, 15f));*/
     }
 
+    public Address getAddress(double latitude, double longitude) {
+        List<Address> addresses = null;
+        if (latitude != 0 && longitude != 0) {
+            try {
+                Geocoder geocoder = new Geocoder(getApplicationContext());
+                addresses = geocoder.getFromLocation(latitude, longitude, 1);
+                String address = addresses.get(0).getAddressLine(0);
+                String city = addresses.get(0).getAddressLine(1);
+                String country = addresses.get(0).getAddressLine(2);
+                Log.d(TAG, "address = " + address + ", city = " + city + ", country = " + country);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toast.makeText(getApplicationContext(), "latitude and longitude are null", Toast.LENGTH_LONG).show();
+        }
+
+        return addresses.get(0);
+    }
+
+    public void currentPositionUpdate(Location arg0){
+
+        Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try  {
+                                        Address adds = getAddress(arg0.getLatitude(), arg0.getLongitude());
+                                        //currentPositionName = new getReverseGeoCoding().getAddress(""+arg0.getLatitude(), ""+arg0.getLongitude());
+                                        currentLatLng = new LatLng(arg0.getLatitude(), arg0.getLongitude());
+
+                                        currentPositionName = adds.getAddressLine(0);
+
+                                        mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title(currentPositionName));
+
+                                        Log.i(TAG, "CURRENT POS NAME::"+currentPositionName);
+                                    } catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                    }, 100);
+        /*Thread netowrkThread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try  {
+                    currentPositionName = new getReverseGeoCoding().getAddress(""+arg0.getLatitude(), ""+arg0.getLongitude());
+                    currentLatLng = new LatLng(arg0.getLatitude(), arg0.getLongitude());
+
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title(currentPositionName));
+                    currentLatLng = new LatLng(arg0.getLatitude(), arg0.getLongitude());
+
+                    Log.i(TAG, "CURRENT POS NAME::"+currentPositionName);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        netowrkThread.start();*/
+
+    }
 
     @Override
     public boolean onMyLocationButtonClick() {
@@ -338,7 +389,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.setOnMyLocationChangeListener(new GoogleMap.OnMyLocationChangeListener() {
                         @Override
                         public void onMyLocationChange(Location arg0) {
-                            mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title("Current Location"));
+                            //mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title(currentPositionName));
+                            currentPositionUpdate(arg0);
                         }
                     });
 
@@ -360,8 +412,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Marker mCurrLocationMarker;
     LocationRequest mLocationRequest;
     String lat, lon;
-    LatLng start;
-    LatLng dest;
+    LatLng currentLatLng;
+    LatLng destLatLng;
     String destlat;
     String destlon;
 
@@ -369,7 +421,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         Log.d(TAG,"Hope");
 
-        LatLng point = start;
+        LatLng point = currentLatLng;
 
         // Already two locations
         if (MarkerPoints.size() > 1) {
@@ -378,15 +430,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         // Adding new item to the ArrayList
-        MarkerPoints.add(start);
-        MarkerPoints.add(dest);
+        MarkerPoints.add(currentLatLng);
+        MarkerPoints.add(destLatLng);
 
         // Creating MarkerOptions
         MarkerOptions options = new MarkerOptions();
 
         // Setting the position of the marker
-        options.position(start);
-        options.position(dest);
+        options.position(currentLatLng);
+        options.position(destLatLng);
 
         /**
          * For the start location, the color of marker is GREEN and
