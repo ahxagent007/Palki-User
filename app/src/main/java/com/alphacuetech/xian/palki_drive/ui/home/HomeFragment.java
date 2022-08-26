@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.alphacuetech.xian.palki_drive.Activities.BodyRentActivity;
 import com.alphacuetech.xian.palki_drive.Activities.TripActivity;
 import com.alphacuetech.xian.palki_drive.databinding.FragmentHomeBinding;
 
@@ -28,11 +29,19 @@ private FragmentHomeBinding binding;
 
 
         ImageView IV_trip = binding.IVTrip;
+        ImageView IV_bodyRent = binding.IVBodyRent;
 
         IV_trip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(container.getContext(), TripActivity.class));
+            }
+        });
+
+        IV_bodyRent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(container.getContext(), BodyRentActivity.class));
             }
         });
 
