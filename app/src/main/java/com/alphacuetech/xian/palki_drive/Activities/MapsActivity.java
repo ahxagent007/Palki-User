@@ -1,19 +1,11 @@
 package com.alphacuetech.xian.palki_drive.Activities;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -31,15 +23,12 @@ import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alphacuetech.xian.palki_drive.DataParser;
 import com.alphacuetech.xian.palki_drive.R;
 import com.alphacuetech.xian.palki_drive.databinding.ActivityMapsBinding;
 import com.alphacuetech.xian.palki_drive.utills.MapsDataModel;
-import com.alphacuetech.xian.palki_drive.utills.getReverseGeoCoding;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -52,12 +41,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.PolylineOptions;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.Autocomplete;
-import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -90,6 +75,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Place selectedPlace;
     String destinationName, currentPositionName;
     String getDestinationPlaceID;
+    String vehicle_model;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +84,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         binding = ActivityMapsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        vehicle_model = getIntent().getStringExtra("MODEL");
 
         btn_findTrip = findViewById(R.id.btn_findTrip);
         btn_findTrip.setVisibility(View.GONE);
@@ -154,8 +143,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 Intent at = new Intent(getApplicationContext(), ConfirmActivity.class);
 
-                MapsDataModel Data = new MapsDataModel("Sedan", currentPositionName, destinationName, currentLatLng, destLatLng);
-
+                MapsDataModel Data = new MapsDataModel(vehicle_model, currentPositionName, destinationName, currentLatLng, destLatLng);
 
                 Gson gson = new Gson();
 

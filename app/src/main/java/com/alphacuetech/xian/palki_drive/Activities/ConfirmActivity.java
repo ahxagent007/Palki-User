@@ -38,6 +38,8 @@ public class ConfirmActivity extends AppCompatActivity {
     EditText dpc_date, ET_comment;
     final Calendar myCalendar= Calendar.getInstance();
 
+    HashMap<String, String> seatCapacity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,14 +61,23 @@ public class ConfirmActivity extends AppCompatActivity {
         LL_date.setVisibility(View.GONE);
         LL_roundTrip.setVisibility(View.GONE);
 
+        seatCapacity = new HashMap<String, String>();
+        seatCapacity.put("Sedan", "4 Seat Capacity");
+        seatCapacity.put("Premium Sedan", "4 Seat Capacity");
+        seatCapacity.put("Mini Microbus", "7 Seat Capacity");
+        seatCapacity.put("Microbus", "11 Seat Capacity");
+        seatCapacity.put("Minibus", "28 Seat Capacity");
+        seatCapacity.put("Bike", "1 Pillion Capacity");
+
         String json_data = getIntent().getStringExtra("JSON_DATA");
         Gson gson = new Gson();
         //Transform a json to java object
         MapsDataModel selectedData = gson.fromJson(json_data, MapsDataModel.class);
 
-        TV_carModel.setText(selectedData.getMODEL());
+        TV_carModel.setText(selectedData.getMODEL()+"\n"+seatCapacity.get(selectedData.getMODEL()));
         TV_pickupPoint.setText(selectedData.getSTART());
         TV_dropPoint.setText(selectedData.getEND());
+
 
         S_date.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
