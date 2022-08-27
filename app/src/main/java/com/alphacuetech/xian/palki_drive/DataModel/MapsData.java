@@ -1,13 +1,13 @@
-package com.alphacuetech.xian.palki_drive.utills;
+package com.alphacuetech.xian.palki_drive.DataModel;
 
 import com.google.android.gms.maps.model.LatLng;
 
-public class MapsDataModel {
+public class MapsData {
 
     String MODEL, START, END;
     LatLng destLatLng, currentLatLng;
 
-    public MapsDataModel(String MODEL, String START, String END, LatLng currentLatLng, LatLng destLatLng) {
+    public MapsData(String MODEL, String START, String END, LatLng currentLatLng, LatLng destLatLng) {
         this.MODEL = MODEL;
         this.START = START;
         this.END = END;

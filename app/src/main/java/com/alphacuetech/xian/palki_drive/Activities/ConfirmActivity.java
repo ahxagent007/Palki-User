@@ -12,12 +12,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RadioButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
 import com.alphacuetech.xian.palki_drive.R;
-import com.alphacuetech.xian.palki_drive.utills.MapsDataModel;
+import com.alphacuetech.xian.palki_drive.DataModel.MapsData;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -72,7 +71,7 @@ public class ConfirmActivity extends AppCompatActivity {
         String json_data = getIntent().getStringExtra("JSON_DATA");
         Gson gson = new Gson();
         //Transform a json to java object
-        MapsDataModel selectedData = gson.fromJson(json_data, MapsDataModel.class);
+        MapsData selectedData = gson.fromJson(json_data, MapsData.class);
 
         TV_carModel.setText(selectedData.getMODEL()+"\n"+seatCapacity.get(selectedData.getMODEL()));
         TV_pickupPoint.setText(selectedData.getSTART());
