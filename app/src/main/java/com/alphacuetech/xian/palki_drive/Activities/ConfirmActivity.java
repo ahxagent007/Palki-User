@@ -17,6 +17,8 @@ import android.widget.TextView;
 
 import com.alphacuetech.xian.palki_drive.R;
 import com.alphacuetech.xian.palki_drive.DataModel.MapsData;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
@@ -35,9 +37,16 @@ public class ConfirmActivity extends AppCompatActivity {
     LinearLayout LL_date, LL_roundTrip;
 
     EditText dpc_date, ET_comment;
-    final Calendar myCalendar= Calendar.getInstance();
+    final Calendar myCalendar = Calendar.getInstance();
 
     HashMap<String, String> seatCapacity;
+
+    String selectedDate, comment = "";
+    boolean isFutureDate, isRoundTrip;
+
+    // Write a message to the database
+    FirebaseDatabase database;
+    DatabaseReference myRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +68,12 @@ public class ConfirmActivity extends AppCompatActivity {
 
         LL_date.setVisibility(View.GONE);
         LL_roundTrip.setVisibility(View.GONE);
+
+        isRoundTrip = false;
+        isFutureDate = false;
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("AUCTION");
 
         seatCapacity = new HashMap<String, String>();
         seatCapacity.put("Sedan", "4 Seat Capacity");
@@ -83,8 +98,10 @@ public class ConfirmActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     LL_date.setVisibility(View.VISIBLE);
+                    isFutureDate = true;
                 }else{
                     LL_date.setVisibility(View.GONE);
+                    isFutureDate = false;
                 }
             }
         });
@@ -94,8 +111,10 @@ public class ConfirmActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if (b){
                     LL_roundTrip.setVisibility(View.VISIBLE);
+                    isRoundTrip = true;
                 }else{
                     LL_roundTrip.setVisibility(View.GONE);
+                    isRoundTrip = false;
                 }
 
             }
@@ -122,6 +141,12 @@ public class ConfirmActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                if(isRoundTrip){
+                    comment = ET_comment.getText().toString();
+                }
+
+                //Add to firebase
+
             }
         });
 
@@ -131,6 +156,7 @@ public class ConfirmActivity extends AppCompatActivity {
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         dpc_date.setText(dateFormat.format(myCalendar.getTime()));
+        selectedDate = dateFormat.format(myCalendar.getTime());
     }
 
 

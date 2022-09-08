@@ -16,7 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PalkiDrive">
         <activity
-            android:name=".NotificationActivity"
+            android:name=".Activities.BiddingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.NotificationActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.BodyRentActivity"

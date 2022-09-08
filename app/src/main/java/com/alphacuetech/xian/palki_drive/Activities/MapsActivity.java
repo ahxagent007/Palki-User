@@ -28,7 +28,7 @@ import android.widget.Toast;
 import com.alphacuetech.xian.palki_drive.DataParser;
 import com.alphacuetech.xian.palki_drive.R;
 import com.alphacuetech.xian.palki_drive.databinding.ActivityMapsBinding;
-import com.alphacuetech.xian.palki_drive.utills.MapsDataModel;
+import com.alphacuetech.xian.palki_drive.DataModel.MapsData;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -143,7 +143,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 Intent at = new Intent(getApplicationContext(), ConfirmActivity.class);
 
-                MapsDataModel Data = new MapsDataModel(vehicle_model, currentPositionName, destinationName, currentLatLng, destLatLng);
+                MapsData Data = new MapsData(vehicle_model, currentPositionName, destinationName, currentLatLng, destLatLng);
 
                 Gson gson = new Gson();
 
@@ -231,6 +231,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Toast.makeText(getApplicationContext(), "latitude and longitude are null", Toast.LENGTH_LONG).show();
         }
 
+
         return addresses.get(0);
     }
 
@@ -248,7 +249,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                         //currentPositionName = new getReverseGeoCoding().getAddress(""+arg0.getLatitude(), ""+arg0.getLongitude());
                                         currentLatLng = new LatLng(arg0.getLatitude(), arg0.getLongitude());
 
-                                        currentPositionName = adds.getAddressLine(0);
+                                        if (adds == null){
+                                            currentPositionName = "Current Position";
+                                        }else{
+                                            currentPositionName = adds.getAddressLine(0);
+                                        }
 
                                         mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title(currentPositionName));
 
