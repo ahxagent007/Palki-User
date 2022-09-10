@@ -15,14 +15,19 @@ import android.widget.LinearLayout;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.alphacuetech.xian.palki_drive.DataModel.Auction;
 import com.alphacuetech.xian.palki_drive.R;
 import com.alphacuetech.xian.palki_drive.DataModel.MapsData;
+import com.alphacuetech.xian.palki_drive.utills.CommonFunctions;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.gson.Gson;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
@@ -146,18 +151,35 @@ public class ConfirmActivity extends AppCompatActivity {
                 }
 
                 //Add to firebase
+                createNewAuctionFirebase(selectedData.getSTART(), selectedData.getEND(), selectedData.getCurrentLatLng(),
+                        selectedData.getDestLatLng(), isRoundTrip, isFutureDate, dateSelectedDate, comment, selectedData.getMODEL());
+
+                //goto another activity
+                //finish this activity
 
             }
         });
 
     }
-
+    Date dateSelectedDate;
     private void updateLabel(){
         String myFormat="MM/dd/yy";
         SimpleDateFormat dateFormat=new SimpleDateFormat(myFormat, Locale.US);
         dpc_date.setText(dateFormat.format(myCalendar.getTime()));
         selectedDate = dateFormat.format(myCalendar.getTime());
+        dateSelectedDate = myCalendar.getTime();
     }
+
+
+    private void createNewAuctionFirebase(String loc_from, String loc_to, LatLng from_latLng, LatLng to_latLng, Boolean round_trip_bool, Boolean date_future, Date date, String round_trip, String vehicle){
+        long milis = new CommonFunctions().getCurrentTimeMilis();
+        String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        Auction auction = new Auction(milis, uid, loc_from, loc_to, from_latLng, to_latLng, round_trip_bool, date_future, date, round_trip, vehicle);
+
+        myRef.child(""+milis).setValue(auction);
+    }
+
 
 
 }
