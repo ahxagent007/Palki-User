@@ -1,6 +1,7 @@
 package com.alphacuetech.xian.palki_drive.Activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
@@ -98,7 +99,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
 
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), getString(R.string.maps_api_key), Locale.US);
+            Places.initialize(getApplicationContext(), "AIzaSyBWe-lmrAYShG_e50U9_W1xHd2msA01DFU");
         }
 
         // Initialize the AutocompleteSupportFragment.
@@ -174,6 +175,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             // for ActivityCompat#requestPermissions for more details.
             //checkPermission(Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_PERMISSION_REQUEST_CODE);
             checkPermission();
+            Log.i(TAG, "NO PERMISSION FOUND");
+            return;
 
         }
 
@@ -387,14 +390,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         }
                     });
 
-                } else {
+                }
+            } else {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q){
                     requestPermissions(new String[]{
                             Manifest.permission.ACCESS_FINE_LOCATION,
                             Manifest.permission.ACCESS_COARSE_LOCATION,
                             Manifest.permission.ACCESS_BACKGROUND_LOCATION
                     }, LOCATION_PERMISSION_REQUEST_CODE);
+                }else{
+                    requestPermissions(new String[]{
+                            Manifest.permission.ACCESS_FINE_LOCATION,
+                            Manifest.permission.ACCESS_COARSE_LOCATION
+                    }, LOCATION_PERMISSION_REQUEST_CODE);
+
                 }
             }
+        }else {
+            Log.i(TAG, "NOT Build.VERSION.SDK_INT >= Build.VERSION_CODES.M");
         }
     }
 

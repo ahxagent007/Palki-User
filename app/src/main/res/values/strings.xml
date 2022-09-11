@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Palki-Drive</string>
+    <string name="app_name">Dolna-Rides</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="nav_header_title">Android Studio</string>
@@ -31,7 +31,7 @@
     <string name="explore_palki">Explore Palki</string>
     <string name="title_activity_maps">MapsActivity</string>
 
-    <string name="maps_api_key">AIzaSyAvGP-j1Bge0g9cQZRthBQNgOFltcSkH_M</string>
+    <string name="maps_api_key">AIzaSyBWe-lmrAYShG_e50U9_W1xHd2msA01DFU</string>
 
 
 </resources>
