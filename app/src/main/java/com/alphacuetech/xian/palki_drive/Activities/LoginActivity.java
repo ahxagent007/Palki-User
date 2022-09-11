@@ -33,17 +33,21 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String phoneNumber = ET_phoneNumber.getText().toString();
 
-                if(phoneNumber.charAt(0) == '0' && phoneNumber.charAt(1) == '1'){
-                    if(phoneNumber.length() == 11){
+                if(phoneNumber.equals("")){
+                    Toast.makeText(getApplicationContext(), "Please enter phone number!", Toast.LENGTH_LONG).show();
+                }else {
+                    if(phoneNumber.charAt(0) == '0' && phoneNumber.charAt(1) == '1'){
+                        if(phoneNumber.length() == 11){
 
-                        Intent i = new Intent(getApplicationContext(), PhoneAuthActivity.class);
-                        i.putExtra("PHONE", phoneNumber);
-                        startActivity(i);
+                            Intent i = new Intent(getApplicationContext(), PhoneAuthActivity.class);
+                            i.putExtra("PHONE", phoneNumber);
+                            startActivity(i);
+                        }else{
+                            Toast.makeText(getApplicationContext(), "Invalid phone number length", Toast.LENGTH_LONG).show();
+                        }
                     }else{
-                        Toast.makeText(getApplicationContext(), "Invalid phone number length", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), "Invalid phone number", Toast.LENGTH_LONG).show();
                     }
-                }else{
-                    Toast.makeText(getApplicationContext(), "Invalid phone number", Toast.LENGTH_LONG).show();
                 }
             }
         });

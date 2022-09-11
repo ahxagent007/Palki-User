@@ -58,7 +58,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome to Palki. Lets explore together."
+                android:text="Welcome to Dolna Rides. Lets explore together."
                 android:gravity="center_vertical"
                 android:textColor="@color/black"
                 android:textStyle="bold"
@@ -210,7 +210,7 @@
                         android:id="@+id/IV_bodyRent"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/ic_baseline_local_car_wash_24"/>
+                        android:src="@drawable/ic_baseline_local_car_wash_24" />
 
                     <TextView
                         android:layout_width="match_parent"

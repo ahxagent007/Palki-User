@@ -12,7 +12,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/common_google_signin_btn_icon_dark"/>
+        android:src="@drawable/logo_small"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -22,7 +22,8 @@
         android:textSize="20dp"
         android:textStyle="bold"
         android:textColor="@color/black"
-        android:padding="10dp"/>
+        android:padding="10dp"
+        android:fontFamily="monospace"/>
 
     <ProgressBar
         android:layout_width="wrap_content"
