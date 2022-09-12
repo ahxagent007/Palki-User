@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.alphacuetech.xian.palki_drive.Activities.BodyRentActivity;
 import com.alphacuetech.xian.palki_drive.Activities.TripActivity;
+import com.alphacuetech.xian.palki_drive.Activities.TripRequestActivity;
 import com.alphacuetech.xian.palki_drive.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -30,6 +31,7 @@ private FragmentHomeBinding binding;
 
         ImageView IV_trip = binding.IVTrip;
         ImageView IV_bodyRent = binding.IVBodyRent;
+        ImageView IV_requestedTrips = binding.IVRequestedTrips;
 
         IV_trip.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,6 +44,13 @@ private FragmentHomeBinding binding;
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(container.getContext(), BodyRentActivity.class));
+            }
+        });
+
+        IV_requestedTrips.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(container.getContext(), TripRequestActivity.class));
             }
         });
 

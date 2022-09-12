@@ -169,7 +169,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/explore_palki"
+                android:text="@string/explore_dolna"
                 android:textSize="15dp"
                 android:textStyle="bold"
                 android:textColor="@color/black"/>
@@ -216,6 +216,28 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="Body Rent"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="15dp"
+                        android:gravity="center"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:id="@+id/IV_requestedTrips"
+                        android:layout_width="100dp"
+                        android:layout_height="80dp"
+                        android:src="@drawable/ic_baseline_beenhere_24" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Trip Request"
                         android:textColor="@color/black"
                         android:textStyle="bold"
                         android:textSize="15dp"
