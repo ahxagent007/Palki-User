@@ -16,9 +16,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alphacuetech.xian.palki_drive.DataModel.Bid;
+import com.alphacuetech.xian.palki_drive.ItemClickListener;
 import com.alphacuetech.xian.palki_drive.R;
+import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
@@ -28,6 +34,10 @@ import java.util.ArrayList;
 public class BiddingActivity extends AppCompatActivity {
 
     RecyclerView RV_biddings;
+    DatabaseReference biddingDatabaseReference;
+
+    ArrayList<Bid> bids = new ArrayList<Bid>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,47 +46,39 @@ public class BiddingActivity extends AppCompatActivity {
 
         RV_biddings = findViewById(R.id.RV_biddings);
 
+        biddingDatabaseReference = FirebaseDatabase.getInstance().getReference();
+
+        String auction_id = getIntent().getStringExtra("auction_id");
+
+        getBiddingsFirebase(auction_id);
 
     }
 
-   /* public void getBiddingsFirebase(){
-        Query query = databaseRefUserTree.child(uid);
-
-        //ArrayList<Tree> user_trees = new ArrayList<>();
+    public void getBiddingsFirebase(String aid){
+        Query query = biddingDatabaseReference.child("auction_id").equalTo(aid);
 
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                user_trees.clear();
+                bids.clear();
 
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    Tree tree = ds.getValue(Tree.class);
-                    user_trees.add(tree);
+                    Bid bid = ds.getValue(Bid.class);
+                    bids.add(bid);
                 }
 
-                ArrayList<Tree> RVTrees = new ArrayList<>();
-
-                for (int i=0; i <user_trees.size(); i++){
-                    Tree t = user_trees.get(i);
-
-                    for (Tree tree : trees){
-                        if (tree.getTree_id() == t.getTree_id()){
-                            RVTrees.add(tree);
-                        }
-                    }
-                }
 
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
 
                         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
-                        RV_tree.setLayoutManager(mLayoutManager);
+                        RV_biddings.setLayoutManager(mLayoutManager);
 
                         //Collections.reverse(FoodMixDB);
 
-                        RecyclerView.Adapter mRecycleAdapter = new CustomAdapterRVTree(RVTrees);
-                        RV_tree.setAdapter(mRecycleAdapter);
+                        RecyclerView.Adapter mRecycleAdapter = new CustomAdapterRVTree(bids);
+                        RV_biddings.setAdapter(mRecycleAdapter);
 
                     }
                 });
@@ -97,21 +99,21 @@ public class BiddingActivity extends AppCompatActivity {
 
     public class CustomAdapterRVTree extends RecyclerView.Adapter<CustomAdapterRVTree.ViewHolder> {
 
-        private ArrayList<Tree> trees;
+        private ArrayList<Bid> bids;
 
         public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
-            private TextView TV_name, TV_water;
-            ImageView IV_img;
-            ImageButton IB_delete;
+            private TextView TV_carModel, TV_carReg, TV_carDetails, TV_bidAmount;
+            ImageView IV_carPic;
 
             public ViewHolder(View view) {
                 super(view);
                 // Define click listener for the ViewHolder's View
 
-                TV_name = (TextView) view.findViewById(R.id.TV_name);
-                TV_water = (TextView) view.findViewById(R.id.TV_water);
-                IV_img = (ImageView) view.findViewById(R.id.IV_img);
-                IB_delete = (ImageButton) view.findViewById(R.id.IB_delete);
+                TV_carModel = view.findViewById(R.id.TV_carModel);
+                TV_carReg = view.findViewById(R.id.TV_carReg);
+                TV_carDetails = view.findViewById(R.id.TV_carDetails);
+                TV_bidAmount = view.findViewById(R.id.TV_bidAmount);
+                IV_carPic = view.findViewById(R.id.IV_carPic);
 
                 view.setOnClickListener(this);
                 view.setOnLongClickListener(this);
@@ -137,8 +139,8 @@ public class BiddingActivity extends AppCompatActivity {
             }
         }
 
-        public CustomAdapterRVTree(ArrayList<Tree> trees) {
-            this.trees = trees;
+        public CustomAdapterRVTree(ArrayList<Bid> bids) {
+            this.bids = bids;
         }
 
         // Create new views (invoked by the layout manager)
@@ -146,7 +148,7 @@ public class BiddingActivity extends AppCompatActivity {
         public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
             // Create a new view, which defines the UI of the list item
             View view = LayoutInflater.from(viewGroup.getContext())
-                    .inflate(R.layout.single_tree, viewGroup, false);
+                    .inflate(R.layout.single_bid, viewGroup, false);
 
             return new CustomAdapterRVTree.ViewHolder(view);
         }
@@ -155,18 +157,18 @@ public class BiddingActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
 
-            viewHolder.IB_delete.setVisibility(View.VISIBLE);
-            viewHolder.TV_name.setText(trees.get((position)).getTree_name());
+            /*viewHolder.IB_delete.setVisibility(View.VISIBLE);
+            viewHolder.TV_name.setText(bids.get((position)).getTree_name());
 
             DecimalFormat df = new DecimalFormat("0.00");
 
-            double w_min = (trees.get(position).getWater_min()/trees.get(position).getTemp_min())*daily.getTemp().getMin();
-            double w_max = (trees.get(position).getWater_max()/trees.get(position).getTemp_max())*daily.getTemp().getMax();
+            double w_min = (bids.get(position).getWater_min()/trees.get(position).getTemp_min())*daily.getTemp().getMin();
+            double w_max = (bids.get(position).getWater_max()/trees.get(position).getTemp_max())*daily.getTemp().getMax();
 
             viewHolder.TV_water.setText(df.format(w_max)+"-"+df.format(w_min)+" ml");
 
 
-            Glide.with(getApplicationContext()).load(trees.get(position).getImg()).into(viewHolder.IV_img);
+            Glide.with(getApplicationContext()).load(bids.get(position).getImg()).into(viewHolder.IV_img);*/
 
             viewHolder.setClickListener(new ItemClickListener() {
                 @Override
@@ -179,18 +181,12 @@ public class BiddingActivity extends AppCompatActivity {
                 }
             });
 
-            viewHolder.IB_delete.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    deleteFromFirebase(trees.get(position).getTree_id(), uid);
-                }
-            });
         }
 
         // Return the size of your dataset (invoked by the layout manager)
         @Override
         public int getItemCount() {
-            return trees.size();
+            return bids.size();
         }
-    }*/
+    }
 }

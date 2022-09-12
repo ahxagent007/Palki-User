@@ -159,7 +159,10 @@ public class ConfirmActivity extends AppCompatActivity {
                         selectedData.getDestLatLng(), isRoundTrip, isFutureDate, dateSelectedDate, comment, selectedData.getMODEL());
 
                 //goto another activity
-                startActivity(new Intent(getApplicationContext(), BiddingActivity.class));
+                Intent at = new Intent(getApplicationContext(), BiddingActivity.class);
+                at.putExtra("auction_id", ""+auction_id);
+                startActivity(at);
+
                 //finish this activity
                 finish();
 
@@ -176,14 +179,14 @@ public class ConfirmActivity extends AppCompatActivity {
         dateSelectedDate = myCalendar.getTime();
     }
 
-
+    long auction_id;
     private void createNewAuctionFirebase(String loc_from, String loc_to, LatLng from_latLng, LatLng to_latLng, Boolean round_trip_bool, Boolean date_future, Date date, String round_trip, String vehicle){
-        long milis = new CommonFunctions().getCurrentTimeMilis();
+        auction_id = new CommonFunctions().getCurrentTimeMilis();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        Auction auction = new Auction(milis, uid, loc_from, loc_to, from_latLng, to_latLng, round_trip_bool, date_future, date, round_trip, vehicle);
+        Auction auction = new Auction(auction_id, uid, loc_from, loc_to, from_latLng, to_latLng, round_trip_bool, date_future, date, round_trip, vehicle);
 
-        myRef.child(""+milis).setValue(auction);
+        myRef.child(""+auction_id).setValue(auction);
         Log.i(TAG, "FIREBASE ADDED");
     }
 
