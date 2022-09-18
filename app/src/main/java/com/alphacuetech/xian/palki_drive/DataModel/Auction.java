@@ -2,14 +2,15 @@ package com.alphacuetech.xian.palki_drive.DataModel;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Auction {
+public class Auction implements Serializable {
 
     long auction_id;
     String user_id;
     String from, to;
-    LatLng from_latLng, to_latLng;
+    double from_lat, from_lng, to_lat, to_lng;
     Boolean round_trip_bool, date_future;
     Date date;
     String round_trip;
@@ -19,18 +20,52 @@ public class Auction {
     public Auction() {
     }
 
-    public Auction(long auction_id, String user_id, String from, String to, LatLng from_latLng, LatLng to_latLng, Boolean round_trip_bool, Boolean date_future, Date date, String round_trip, String vehicle) {
+    public Auction(long auction_id, String user_id, String from, String to, double from_lat, double from_lng, double to_lat, double to_lng, Boolean round_trip_bool, Boolean date_future, Date date, String round_trip, String vehicle) {
         this.auction_id = auction_id;
         this.user_id = user_id;
         this.from = from;
         this.to = to;
-        this.from_latLng = from_latLng;
-        this.to_latLng = to_latLng;
+        this.from_lat = from_lat;
+        this.from_lng = from_lng;
+        this.to_lat = to_lat;
+        this.to_lng = to_lng;
         this.round_trip_bool = round_trip_bool;
         this.date_future = date_future;
         this.date = date;
         this.round_trip = round_trip;
         this.vehicle = vehicle;
+    }
+
+    public double getFrom_lat() {
+        return from_lat;
+    }
+
+    public void setFrom_lat(double from_lat) {
+        this.from_lat = from_lat;
+    }
+
+    public double getFrom_lng() {
+        return from_lng;
+    }
+
+    public void setFrom_lng(double from_lng) {
+        this.from_lng = from_lng;
+    }
+
+    public double getTo_lat() {
+        return to_lat;
+    }
+
+    public void setTo_lat(double to_lat) {
+        this.to_lat = to_lat;
+    }
+
+    public double getTo_lng() {
+        return to_lng;
+    }
+
+    public void setTo_lng(double to_lng) {
+        this.to_lng = to_lng;
     }
 
     public long getAuction_id() {
@@ -63,22 +98,6 @@ public class Auction {
 
     public void setTo(String to) {
         this.to = to;
-    }
-
-    public LatLng getFrom_latLng() {
-        return from_latLng;
-    }
-
-    public void setFrom_latLng(LatLng from_latLng) {
-        this.from_latLng = from_latLng;
-    }
-
-    public LatLng getTo_latLng() {
-        return to_latLng;
-    }
-
-    public void setTo_latLng(LatLng to_latLng) {
-        this.to_latLng = to_latLng;
     }
 
     public Boolean getRound_trip_bool() {

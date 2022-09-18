@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.PalkiDrive">
         <activity
-            android:name=".TripRequestActivity"
+            android:name=".Activities.TripRequestActivity"
             android:exported="false" />
         <activity
             android:name=".Activities.BiddingActivity"

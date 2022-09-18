@@ -24,7 +24,7 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_weight="6"
         android:gravity="center_vertical"
@@ -62,7 +62,7 @@
     <TextView
         android:id="@+id/TV_bidAmount"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:text="800 TK"
         android:gravity="center"
         android:textStyle="bold"

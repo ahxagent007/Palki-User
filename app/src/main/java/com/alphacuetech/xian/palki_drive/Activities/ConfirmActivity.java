@@ -160,7 +160,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
                 //goto another activity
                 Intent at = new Intent(getApplicationContext(), BiddingActivity.class);
-                at.putExtra("auction_id", auction_id);
+                at.putExtra("auction", auction);
                 startActivity(at);
 
                 //finish this activity
@@ -180,11 +180,12 @@ public class ConfirmActivity extends AppCompatActivity {
     }
 
     long auction_id;
+    Auction auction;
     private void createNewAuctionFirebase(String loc_from, String loc_to, LatLng from_latLng, LatLng to_latLng, Boolean round_trip_bool, Boolean date_future, Date date, String round_trip, String vehicle){
         auction_id = new CommonFunctions().getCurrentTimeMilis();
         String uid = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        Auction auction = new Auction(auction_id, uid, loc_from, loc_to, from_latLng, to_latLng, round_trip_bool, date_future, date, round_trip, vehicle);
+        auction = new Auction(auction_id, uid, loc_from, loc_to, from_latLng.latitude,from_latLng.longitude, to_latLng.latitude, to_latLng.longitude, round_trip_bool, date_future, date, round_trip, vehicle);
 
         myRef.child(""+auction_id).setValue(auction);
         Log.i(TAG, "FIREBASE ADDED");

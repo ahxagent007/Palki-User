@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alphacuetech.xian.palki_drive.DataModel.Auction;
 import com.alphacuetech.xian.palki_drive.DataModel.Bid;
 import com.alphacuetech.xian.palki_drive.ItemClickListener;
 import com.alphacuetech.xian.palki_drive.R;
@@ -33,6 +35,8 @@ import java.util.ArrayList;
 
 public class BiddingActivity extends AppCompatActivity {
 
+    TextView TV_pickupPoint, TV_dropPoint;
+
     RecyclerView RV_biddings;
     DatabaseReference biddingDatabaseReference;
 
@@ -45,19 +49,25 @@ public class BiddingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bidding);
 
         RV_biddings = findViewById(R.id.RV_biddings);
+        TV_pickupPoint = findViewById(R.id.TV_pickupPoint);
+        TV_dropPoint = findViewById(R.id.TV_dropPoint);
 
-        biddingDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
-        long auction_id = getIntent().getLongExtra("auction_id", 0);
+        Auction auction = (Auction) getIntent().getSerializableExtra("auction");
 
-        getBiddingsFirebase(auction_id);
+        TV_pickupPoint.setText(auction.getFrom());
+        TV_dropPoint.setText(auction.getTo());
+
+
+        biddingDatabaseReference = FirebaseDatabase.getInstance().getReference("BIDS").child(""+auction.getAuction_id());
+
+        getBiddingsFirebase();
 
     }
+    String TAG = "XIAN";
+    public void getBiddingsFirebase(){
 
-    public void getBiddingsFirebase(long aid){
-        Query query = biddingDatabaseReference.child("auction_id").equalTo(aid);
-
-        query.addValueEventListener(new ValueEventListener() {
+        biddingDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 bids.clear();
@@ -65,6 +75,7 @@ public class BiddingActivity extends AppCompatActivity {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     Bid bid = ds.getValue(Bid.class);
                     bids.add(bid);
+                    Log.i(TAG, bid.getCar_registration_no());
                 }
 
 
@@ -77,7 +88,7 @@ public class BiddingActivity extends AppCompatActivity {
 
                         //Collections.reverse(FoodMixDB);
 
-                        RecyclerView.Adapter mRecycleAdapter = new CustomAdapterRVTree(bids);
+                        RecyclerView.Adapter mRecycleAdapter = new CustomAdapterRVBids(bids);
                         RV_biddings.setAdapter(mRecycleAdapter);
 
                     }
@@ -97,7 +108,7 @@ public class BiddingActivity extends AppCompatActivity {
         });
     }
 
-    public class CustomAdapterRVTree extends RecyclerView.Adapter<CustomAdapterRVTree.ViewHolder> {
+    public class CustomAdapterRVBids extends RecyclerView.Adapter<CustomAdapterRVBids.ViewHolder> {
 
         private ArrayList<Bid> bids;
 
@@ -139,7 +150,7 @@ public class BiddingActivity extends AppCompatActivity {
             }
         }
 
-        public CustomAdapterRVTree(ArrayList<Bid> bids) {
+        public CustomAdapterRVBids(ArrayList<Bid> bids) {
             this.bids = bids;
         }
 
@@ -150,7 +161,7 @@ public class BiddingActivity extends AppCompatActivity {
             View view = LayoutInflater.from(viewGroup.getContext())
                     .inflate(R.layout.single_bid, viewGroup, false);
 
-            return new CustomAdapterRVTree.ViewHolder(view);
+            return new CustomAdapterRVBids.ViewHolder(view);
         }
 
         // Replace the contents of a view (invoked by the layout manager)
@@ -160,7 +171,7 @@ public class BiddingActivity extends AppCompatActivity {
             viewHolder.TV_carModel.setText(bids.get((position)).getCar_model());
             viewHolder.TV_carReg.setText(bids.get((position)).getCar_registration_no());
             viewHolder.TV_carDetails.setText(bids.get((position)).getCar_condition()+"AC:"+bids.get(position).isCar_ac());
-            viewHolder.TV_bidAmount.setText(bids.get((position)).getBid_amount());
+            viewHolder.TV_bidAmount.setText(""+bids.get((position)).getBid_amount());
 
             Glide.with(getApplicationContext()).load(bids.get(position).getCar_image()).into(viewHolder.IV_carPic);
 
