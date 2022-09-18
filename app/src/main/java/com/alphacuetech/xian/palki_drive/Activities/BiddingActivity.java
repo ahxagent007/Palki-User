@@ -48,13 +48,13 @@ public class BiddingActivity extends AppCompatActivity {
 
         biddingDatabaseReference = FirebaseDatabase.getInstance().getReference();
 
-        String auction_id = getIntent().getStringExtra("auction_id");
+        long auction_id = getIntent().getLongExtra("auction_id", 0);
 
         getBiddingsFirebase(auction_id);
 
     }
 
-    public void getBiddingsFirebase(String aid){
+    public void getBiddingsFirebase(long aid){
         Query query = biddingDatabaseReference.child("auction_id").equalTo(aid);
 
         query.addValueEventListener(new ValueEventListener() {
@@ -157,18 +157,12 @@ public class BiddingActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
 
-            /*viewHolder.IB_delete.setVisibility(View.VISIBLE);
-            viewHolder.TV_name.setText(bids.get((position)).getTree_name());
+            viewHolder.TV_carModel.setText(bids.get((position)).getCar_model());
+            viewHolder.TV_carReg.setText(bids.get((position)).getCar_registration_no());
+            viewHolder.TV_carDetails.setText(bids.get((position)).getCar_condition()+"AC:"+bids.get(position).isCar_ac());
+            viewHolder.TV_bidAmount.setText(bids.get((position)).getBid_amount());
 
-            DecimalFormat df = new DecimalFormat("0.00");
-
-            double w_min = (bids.get(position).getWater_min()/trees.get(position).getTemp_min())*daily.getTemp().getMin();
-            double w_max = (bids.get(position).getWater_max()/trees.get(position).getTemp_max())*daily.getTemp().getMax();
-
-            viewHolder.TV_water.setText(df.format(w_max)+"-"+df.format(w_min)+" ml");
-
-
-            Glide.with(getApplicationContext()).load(bids.get(position).getImg()).into(viewHolder.IV_img);*/
+            Glide.with(getApplicationContext()).load(bids.get(position).getCar_image()).into(viewHolder.IV_carPic);
 
             viewHolder.setClickListener(new ItemClickListener() {
                 @Override

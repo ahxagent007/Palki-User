@@ -160,7 +160,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
                 //goto another activity
                 Intent at = new Intent(getApplicationContext(), BiddingActivity.class);
-                at.putExtra("auction_id", ""+auction_id);
+                at.putExtra("auction_id", auction_id);
                 startActivity(at);
 
                 //finish this activity
