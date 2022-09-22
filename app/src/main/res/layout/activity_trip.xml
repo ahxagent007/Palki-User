@@ -26,7 +26,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_baseline_directions_car_24"/>
+            android:src="@drawable/sedan"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,7 +64,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_baseline_directions_car_24"/>
+            android:src="@drawable/premium_car"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,7 +102,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_baseline_directions_car_24"/>
+            android:src="@drawable/mini_micro_bus"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -140,7 +140,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_baseline_directions_car_24"/>
+            android:src="@drawable/micro_bus"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -178,7 +178,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_baseline_directions_car_24"/>
+            android:src="@drawable/mini_bus"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -216,7 +216,7 @@
         <ImageView
             android:layout_width="100dp"
             android:layout_height="70dp"
-            android:src="@drawable/ic_baseline_directions_bike_24"/>
+            android:src="@drawable/bike"/>
 
         <LinearLayout
             android:layout_width="match_parent"

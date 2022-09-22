@@ -158,6 +158,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try  {
+                            float zoomLevel = 15.0f; //This goes up to 21
+                            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLatLng, zoomLevel));
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            }
+        }, 3000);
+
     }
 
     @Override
@@ -241,33 +260,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void currentPositionUpdate(Location arg0){
 
         Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
+            handler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    try  {
-                                        Address adds = getAddress(arg0.getLatitude(), arg0.getLongitude());
-                                        //currentPositionName = new getReverseGeoCoding().getAddress(""+arg0.getLatitude(), ""+arg0.getLongitude());
-                                        currentLatLng = new LatLng(arg0.getLatitude(), arg0.getLongitude());
+                            try  {
+                                Address adds = getAddress(arg0.getLatitude(), arg0.getLongitude());
+                                //currentPositionName = new getReverseGeoCoding().getAddress(""+arg0.getLatitude(), ""+arg0.getLongitude());
+                                currentLatLng = new LatLng(arg0.getLatitude(), arg0.getLongitude());
 
-                                        if (adds == null){
-                                            currentPositionName = "Current Position";
-                                        }else{
-                                            currentPositionName = adds.getAddressLine(0);
-                                        }
-
-                                        mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title(currentPositionName));
-
-                                        Log.i(TAG, "CURRENT POS NAME::"+currentPositionName);
-                                    } catch (Exception e) {
-                                        e.printStackTrace();
-                                    }
+                                if (adds == null){
+                                    currentPositionName = "Current Position";
+                                }else{
+                                    currentPositionName = adds.getAddressLine(0);
                                 }
-                            });
+
+                                mMap.addMarker(new MarkerOptions().position(new LatLng(arg0.getLatitude(), arg0.getLongitude())).title(currentPositionName));
+
+                                Log.i(TAG, "CURRENT POS NAME::"+currentPositionName);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
                         }
-                    }, 100);
+                    });
+                }
+            }, 100);
         /*Thread netowrkThread = new Thread(new Runnable() {
             @Override
             public void run() {
