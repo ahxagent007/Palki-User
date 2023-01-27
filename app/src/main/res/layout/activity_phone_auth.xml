@@ -68,11 +68,18 @@
         android:textColor="@color/dark_blue"/>
 
     <Button
+        android:visibility="visible"
         android:id="@+id/btn_verifyOTPBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm"
         android:layout_margin="10dp"
-        android:background="@drawable/round_bg_blue"/>
+        android:background="@drawable/round_bg_blue">
+
+    </Button>
+    <include
+
+        layout="@layout/waiting"
+        ></include>
 
 </LinearLayout>

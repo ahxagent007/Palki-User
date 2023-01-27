@@ -75,7 +75,7 @@ public class BiddingActivity extends AppCompatActivity {
                 for(DataSnapshot ds: dataSnapshot.getChildren()){
                     Bid bid = ds.getValue(Bid.class);
                     bids.add(bid);
-                    Log.i(TAG, bid.getCar_registration_no());
+                   // Log.i(TAG, bid.getCar_registration_no());
                 }
 
 
@@ -168,12 +168,12 @@ public class BiddingActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ViewHolder viewHolder, @SuppressLint("RecyclerView") int position) {
 
-            viewHolder.TV_carModel.setText(bids.get((position)).getCar_model());
-            viewHolder.TV_carReg.setText(bids.get((position)).getCar_registration_no());
-            viewHolder.TV_carDetails.setText(bids.get((position)).getCar_condition()+"AC:"+bids.get(position).isCar_ac());
-            viewHolder.TV_bidAmount.setText(""+bids.get((position)).getBid_amount());
+           // viewHolder.TV_carModel.setText(bids.get((position)).getCar_model());
+          //  viewHolder.TV_carReg.setText(bids.get((position)).getCar_registration_no());
+           // viewHolder.TV_carDetails.setText(bids.get((position)).getCar_condition()+"AC:"+bids.get(position).isCar_ac());
+          //  viewHolder.TV_bidAmount.setText(""+bids.get((position)).getBid_amount());
 
-            Glide.with(getApplicationContext()).load(bids.get(position).getCar_image()).into(viewHolder.IV_carPic);
+           // Glide.with(getApplicationContext()).load(bids.get(position).getCar_image()).into(viewHolder.IV_carPic);
 
             viewHolder.setClickListener(new ItemClickListener() {
                 @Override

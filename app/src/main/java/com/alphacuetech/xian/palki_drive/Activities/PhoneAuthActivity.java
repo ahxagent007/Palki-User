@@ -2,19 +2,36 @@ package com.alphacuetech.xian.palki_drive.Activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.animation.ValueAnimator;
+import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alphacuetech.xian.palki_drive.R;
 import com.alphacuetech.xian.palki_drive.SharedPreff;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
@@ -25,13 +42,19 @@ import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.concurrent.TimeUnit;
 
 public class PhoneAuthActivity extends AppCompatActivity {
     String TAG = "XIAN";
     String phoneNumber;
+    String check="";
 
+    LinearLayout wait;
     private FirebaseAuth mAuth;
+
 
     // variable for our text input
     // field for phone and OTP.
@@ -56,6 +79,8 @@ public class PhoneAuthActivity extends AppCompatActivity {
         phoneNumber = getIntent().getStringExtra("PHONE");
 
         phoneNumber = "+88"+phoneNumber;
+        wait=findViewById(R.id.wait);
+        wait.setVisibility(View.GONE);
 
         Log.d(TAG, "onCreate: "+phoneNumber);
 
@@ -68,6 +93,23 @@ public class PhoneAuthActivity extends AppCompatActivity {
         btn_verifyOTPBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+              // Intent i = new Intent(getApplicationContext(), CarDetails.class);
+               //startActivity(i);
+
+
+
+
+
+               // Intent i = new Intent(getApplicationContext(), UserDetails.class);
+              //  startActivity(i);
+                FirebaseUser currentUser = mAuth.getCurrentUser();
+               // Log.i("jap",currentUser.getUid());
+                SharedPreff s=new SharedPreff(getApplicationContext());
+
+                //new SharedPreff(getApplicationContext()).setFirebaseUID(currentUser.getUid());
+
+              //  s.setFirebaseUID("tlOD3NoH8sP5P3M1j4kKmZQuiBg2");
+
                 // validating if the OTP text field is empty or not.
                 if (TextUtils.isEmpty(ET_OTP.getText().toString())) {
                     // if the OTP text field is empty display
@@ -76,7 +118,12 @@ public class PhoneAuthActivity extends AppCompatActivity {
                 } else {
                     // if OTP field is not empty calling
                     // method to verify the OTP.
+                    waitAnim();
+                    btn_verifyOTPBtn.setVisibility(View.GONE);
+                    wait.setVisibility(View.VISIBLE);
                     verifyCode(ET_OTP.getText().toString());
+
+
                 }
             }
         });
@@ -93,17 +140,78 @@ public class PhoneAuthActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // if the code is correct and the task is successful
                             // we are sending our user to new activity.
-                            Intent i = new Intent(getApplicationContext(), MainActivity.class);
-                            startActivity(i);
+                           // Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                           // startActivity(i);
 
                             FirebaseUser currentUser = mAuth.getCurrentUser();
-                            new SharedPreff(getApplicationContext()).setFirebaseUID(currentUser.getUid());
+                            SharedPreff s=new SharedPreff(getApplicationContext());
+                            Log.i("ja",currentUser.getUid());
+                            //new SharedPreff(getApplicationContext()).setFirebaseUID(currentUser.getUid());
+                            //s.setFirebaseUID(currentUser.getUid());
 
-                            finish();
+                            String url="https://Dolnabd.com/api/Rider/Get/Details/"+currentUser.getUid();
+                            StringRequest stringRequest=new StringRequest(Request.Method.GET, url, new Response.Listener<String>() {
+                                @Override
+                                public void onResponse(String response) {
+
+                                    JSONObject obj ;
+                                    try {
+                                        obj = new JSONObject(response);
+
+                                        check=obj.toString();
+                                        Log.i("jap","age"+check.length());
+                                        // System.out.println("sd"+obj.toString());
+                                        //  det.setVisibility(View.VISIBLE);
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+
+                                    }
+
+                                    if(check.length()>10){
+                                        // Log.i("jap","hurre");
+                                        Intent i = new Intent(getApplicationContext(), MainActivity.class);
+                                        s.setFirebaseUID(currentUser.getUid());
+                                        i.putExtra("user_id",currentUser.getUid());
+                                        startActivity(i);
+                                    }
+                                    else{
+                                        // Log.i("jap","nothurre");
+                                        Intent i = new Intent(getApplicationContext(), UserDetails.class);
+                                        i.putExtra("user_id",currentUser.getUid());
+
+                                        startActivity(i);
+                                    }
+
+
+                                }
+                            },new Response.ErrorListener(){
+
+                                @Override
+                                public void onErrorResponse(VolleyError error) {
+
+                                    // Log.i("yap","Yeap");
+
+                                }
+                            });
+                            RequestQueue requestQueue= Volley.newRequestQueue(PhoneAuthActivity.this);
+                            requestQueue.add(stringRequest);
+
+                            Log.i("jap","page"+check.length());
+
+
+
+
+
+
+                            //finish();
                         } else {
                             // if the code is not correct then we are
                             // displaying an error message to the user.
                             Toast.makeText(getApplicationContext(), task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                            Log.i("xin",task.getException().getMessage());
+                            btn_verifyOTPBtn.setVisibility(View.VISIBLE);
+                            wait.setVisibility(View.GONE);
+                            //System.out.println( task.getException().getMessage());
                         }
                     }
                 });
@@ -169,10 +277,14 @@ public class PhoneAuthActivity extends AppCompatActivity {
 
     // this method is called when firebase doesn't
     // sends our OTP code due to any error or issue.
+
     @Override
     public void onVerificationFailed(FirebaseException e) {
         // displaying error message with firebase exception.
         Toast.makeText(getApplicationContext(), e.getMessage(), Toast.LENGTH_LONG).show();
+        Log.i("xin",e.getMessage());
+        btn_verifyOTPBtn.setVisibility(View.VISIBLE);
+        wait.setVisibility(View.GONE);
     }
 };
 
@@ -186,4 +298,49 @@ public class PhoneAuthActivity extends AppCompatActivity {
         // calling sign in method.
         signInWithCredential(credential);
     }
+    public void waitAnim(){
+        ImageView i2=findViewById(R.id.wait_b);
+        ImageView i1=findViewById(R.id.wait_a);
+        ImageView i3=findViewById(R.id.wait_c);
+        Animation anim2 = new ScaleAnimation(
+                1f, 1f, // Start and end values for the X axis scaling
+                1f, 0.5f, // Start and end values for the Y axis scaling
+                Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
+                Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
+        anim2.setFillAfter(true);
+        anim2.setRepeatCount(15);
+        anim2.setRepeatMode(ValueAnimator.REVERSE);// Needed to keep the result of the animation
+        anim2.setDuration(500);
+
+        Animation anim1 = new ScaleAnimation(
+                1f, 1f, // Start and end values for the X axis scaling
+                1f, 2f, // Start and end values for the Y axis scaling
+                Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
+                Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
+        anim1.setFillAfter(true);
+        anim1.setRepeatCount(15);
+        anim1.setRepeatMode(ValueAnimator.REVERSE);// Needed to keep the result of the animation
+        anim1.setDuration(500);
+
+        Animation anim3 = new ScaleAnimation(
+                1f, 1f, // Start and end values for the X axis scaling
+                1f, 2f, // Start and end values for the Y axis scaling
+                Animation.RELATIVE_TO_SELF, 0.5f, // Pivot point of X scaling
+                Animation.RELATIVE_TO_SELF, 0.5f); // Pivot point of Y scaling
+        anim3.setFillAfter(true);
+        anim3.setRepeatCount(15);
+        anim3.setRepeatMode(ValueAnimator.REVERSE);// Needed to keep the result of the animation
+        anim3.setDuration(500);
+
+
+
+
+
+
+
+        i2.startAnimation(anim2);
+        i1.startAnimation(anim1);
+        i3.startAnimation(anim3);
+    }
+
 }

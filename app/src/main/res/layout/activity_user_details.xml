@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.UserDetails"
+    android:background="@color/yellow"
+    >
+
+    <ImageView
+       android:layout_width="match_parent"
+       android:layout_height="100dp"
+       >
+
+   </ImageView>
+    <LinearLayout
+       android:padding="20dp"
+    android:background="@drawable/roundedlayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+
+            android:text="Details"
+            android:layout_marginBottom="10dp"
+            android:textSize="40dp">
+
+        </TextView>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <EditText
+                    android:id="@+id/user_name"
+                    android:hint="Name"
+                    android:drawableLeft="@drawable/person"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingStart="20dp"
+                    android:background="@drawable/roundededittext"
+                    android:layout_marginBottom="20dp"
+                    >
+
+
+                </EditText>
+                <EditText
+                    android:id="@+id/user_mail"
+                    android:hint="Mail"
+                    android:drawableLeft="@drawable/mail"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingStart="20dp"
+                    android:background="@drawable/roundededittext"
+                    android:layout_marginBottom="20dp"
+                    >
+
+
+                </EditText>
+                <EditText
+                    android:id="@+id/user_phn"
+                    android:hint="Phone no"
+                    android:drawableLeft="@drawable/phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingStart="20dp"
+                    android:background="@drawable/roundededittext"
+                    android:layout_marginBottom="20dp"
+                    >
+
+
+                </EditText>
+                <EditText
+                    android:id="@+id/user_address"
+                    android:hint="Address"
+                    android:drawableLeft="@drawable/address"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingStart="20dp"
+                    android:background="@drawable/roundededittext"
+                    android:layout_marginBottom="20dp"
+                    >
+
+
+                </EditText>
+                <EditText
+                    android:id="@+id/user_gender"
+                    android:hint="Gender"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingStart="20dp"
+                    android:background="@drawable/roundededittext"
+                    android:layout_marginBottom="20dp"
+                    android:drawableLeft="@drawable/gender"
+                    >
+
+
+                </EditText>
+                <EditText
+                    android:id="@+id/user_age"
+                    android:hint="Age"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:paddingStart="20dp"
+                    android:drawableLeft="@drawable/age"
+                    android:background="@drawable/roundededittext"
+                    android:layout_marginBottom="50dp"
+                    >
+
+
+                </EditText>
+                <ImageView
+                    android:id="@+id/profileimage"
+                    android:layout_marginTop="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    >
+
+                </ImageView>
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    >
+                    <TextView
+                        android:gravity="center"
+
+                        android:layout_margin="30dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Select profile Photo"
+                        android:textColor="#9E0219"
+                        />
+                    <ImageButton
+                        android:id="@+id/imageselect"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_gravity="center"
+                        android:src="@mipmap/ic_launcher">
+
+                    </ImageButton>
+
+                </LinearLayout>
+                <Button
+
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/confirm_user"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:text="Confirm"
+                    android:background="@drawable/btnbg"
+
+                    ></Button>
+            </LinearLayout>
+
+        </ScrollView>
+    </LinearLayout>
+
+</TableLayout>

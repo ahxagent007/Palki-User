@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 
     <application
@@ -15,6 +17,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.PalkiDrive">
+        <activity
+            android:name=".Activities.driverInfo"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.RentFrag"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.Rental"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.UserDetails"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.CarDetails"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.BiddingOngoingActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.RentConfirmActivity"
+            android:exported="false" />
         <activity
             android:name=".Activities.TripRequestActivity"
             android:exported="false" />
@@ -61,6 +84,9 @@
             android:name=".Activities.MainActivity"
             android:exported="false"
             android:theme="@style/Theme.PalkiDrive.NoActionBar" />
+        <service android:name=".Activities.PushNotificationService" >
+
+        </service>
     </application>
 
 </manifest>

@@ -26,10 +26,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.alphacuetech.xian.palki_drive.DataModel.RentalData;
 import com.alphacuetech.xian.palki_drive.DataParser;
 import com.alphacuetech.xian.palki_drive.R;
 import com.alphacuetech.xian.palki_drive.databinding.ActivityMapsBinding;
 import com.alphacuetech.xian.palki_drive.DataModel.MapsData;
+import com.alphacuetech.xian.palki_drive.ui.rental.RentalFragment;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -74,10 +76,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button btn_findTrip;
 
     Place selectedPlace;
-    String destinationName, currentPositionName;
+    String destinationName;
+     String currentPositionName;
     String getDestinationPlaceID;
     String vehicle_model;
-
+    RentalData rentalData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +90,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(binding.getRoot());
 
         vehicle_model = getIntent().getStringExtra("MODEL");
+        rentalData=new RentalData();
+        rentalData.setDate_(getIntent().getStringExtra("date"));
+        rentalData.setTime_(getIntent().getStringExtra("time"));
+        rentalData.setNote(getIntent().getStringExtra("note"));
+        rentalData.setSeatcap(getIntent().getStringExtra("seatcap"));
+        rentalData.setCarType(getIntent().getStringExtra("carType"));
+        rentalData.setRoundTrip(getIntent().getStringExtra("round_trip"));
 
         btn_findTrip = findViewById(R.id.btn_findTrip);
         btn_findTrip.setVisibility(View.GONE);
@@ -142,19 +152,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btn_findTrip.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent at = new Intent(getApplicationContext(), ConfirmActivity.class);
+               // Intent at = new Intent(getApplicationContext(), );
+
 
                 MapsData Data = new MapsData(vehicle_model, currentPositionName, destinationName, currentLatLng, destLatLng);
 
-                Gson gson = new Gson();
+                double startlati=currentLatLng.latitude;
+                double startlong=currentLatLng.longitude;
+                double endlati=destLatLng.latitude;
+                double endlong=destLatLng.longitude;
+                float[] results = new float[1];;
 
-                //transform a java object to json
-                System.out.println("json =" + gson.toJson(Data).toString());
 
-                String json_data = gson.toJson(Data).toString();
 
-                at.putExtra("JSON_DATA",json_data);
-                startActivity(at);
+                Location.distanceBetween( startlati,startlong ,endlati,endlong,results);
+
+
+
+                //at.putExtra("JSON_DATA",json_data);
+               // startActivity(at);
+                Intent previousScreen = new Intent(getApplicationContext(), Rental.class);
+                //Sending the data to Activity_A
+                previousScreen.putExtra("currentPositionName", currentPositionName);
+                previousScreen.putExtra("destinationName",destinationName);
+                previousScreen.putExtra("date",rentalData.getDate_());
+                previousScreen.putExtra("time",rentalData.getTime_());
+                previousScreen.putExtra("note",rentalData.getNote());
+                previousScreen.putExtra("carType",rentalData.getCarType());
+                previousScreen.putExtra("round_trip",rentalData.getRoundTrip());
+                previousScreen.putExtra("start_latLng",currentLatLng.toString());
+                previousScreen.putExtra("end_latLng",destLatLng.toString());
+                previousScreen.putExtra("min_fare",((results[0]/1000)*18)+" BDT");
+
+
+                Log.i("Nahid","hiiiiiiiiiiiii"+(results[0]/1000)*18);
+
+
+                startActivity(previousScreen);
+
+                finish();
             }
         });
 

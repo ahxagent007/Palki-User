@@ -13,8 +13,8 @@ import com.alphacuetech.xian.palki_drive.R;
 import com.alphacuetech.xian.palki_drive.SharedPreff;
 import com.alphacuetech.xian.palki_drive.utills.CommonFunctions;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.appcheck.FirebaseAppCheck;
-import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
+//import com.google.firebase.appcheck.FirebaseAppCheck;
+//import com.google.firebase.appcheck.safetynet.SafetyNetAppCheckProviderFactory;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -26,7 +26,7 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        initializeAppCheck();
+        //initializeAppCheck();
 
         //-------------------
         /*FirebaseDatabase database;
@@ -65,10 +65,12 @@ public class SplashScreenActivity extends AppCompatActivity {
 
     }
 
-    public void initializeAppCheck(){
+   /* public void initializeAppCheck(){
         FirebaseApp.initializeApp(getApplicationContext());
         FirebaseAppCheck firebaseAppCheck = FirebaseAppCheck.getInstance();
         firebaseAppCheck.installAppCheckProviderFactory(
                 SafetyNetAppCheckProviderFactory.getInstance());
     }
+    */
+
 }

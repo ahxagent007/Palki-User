@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.RentConfirmActivity"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+
+        android:id="@+id/Rental_Details_bottom"
+        android:background="@drawable/roundedbg"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20dp"
+        >
+
+        <TextView
+            android:id="@+id/date_click_settext"
+            android:layout_weight="1"
+            android:layout_marginLeft="3dp"
+            android:gravity="center_vertical"
+            android:textSize="20dp"
+            android:text="Rental Details"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+        </TextView>
+        <TextView
+            android:layout_marginRight="5dp"
+            android:layout_gravity="center"
+            android:background="@drawable/dropdown"
+            android:text=""
+            android:layout_width="25dp"
+            android:layout_height="25dp"></TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        >
+
+        <androidx.cardview.widget.CardView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+
+
+            app:cardBackgroundColor="@color/white"
+            app:cardMaxElevation="5dp"
+            android:layout_marginBottom="5dp">
+            <LinearLayout
+                android:id="@+id/LL_sedan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/bottom_sheet_car_pic"
+                    android:layout_weight="3"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp"
+                    android:src="@drawable/prvt"/>
+
+                <LinearLayout
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/bottom_sheet_car_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Sedan"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20dp"/>
+
+                    <TextView
+                        android:id="@+id/bottom_sheet_seat_cap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="4 Seat Capacity"
+                        android:textColor="@color/black"
+                        android:textStyle="normal"
+                        android:textSize="15dp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+
+
+            app:cardBackgroundColor="@color/white"
+            app:cardMaxElevation="5dp"
+            android:layout_marginBottom="5dp">
+            <LinearLayout
+                android:id="@+id/place_selector"
+                android:layout_margin="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/round"
+                        android:layout_marginBottom="20dp"
+                        >
+
+                    </ImageView>
+                    <View
+
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="5dp"
+                        android:layout_width="2dp"
+                        android:background="@color/grey_light"
+                        android:layout_height="50dp">
+
+                    </View>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@color/purple_700"
+
+                        >
+
+                    </ImageView>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="5dp"
+                    android:gravity="top">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="PickUp Point"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20dp"/>
+
+                    <TextView
+
+                        android:id="@+id/bottom_sheet_start_trip"
+
+
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="20dp"
+
+
+                        >
+
+
+                    </TextView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DropOff"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="20dp"/>
+
+                    <TextView
+                        android:id="@+id/bottom_sheet_dest_trip"
+
+
+
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:paddingStart="20dp"
+
+
+                        >
+
+
+                    </TextView>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardElevation="5dp"
+            app:cardCornerRadius="10dp"
+
+
+            app:cardBackgroundColor="@color/white"
+            app:cardMaxElevation="5dp"
+            android:layout_marginBottom="5dp"
+            >
+
+            <LinearLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/bottom_sheet_date"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:textSize="15dp"
+                    android:text="TRIP DATE and TIME"
+
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+                <TextView
+                    android:id="@+id/bottom_sheet_time"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:textSize="20dp"
+                    android:text="TRIP DATE and TIME"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"/>
+
+
+                <View
+                    android:layout_marginTop="5dp"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="5dp"
+                    android:layout_width="match_parent"
+                    android:background="@color/grey_light"
+                    android:layout_height="1dp"
+                    ></View>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <TextView
+                        android:layout_weight="15"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:textSize="15dp"
+                        android:text="Round Trip"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+                    <TextView
+                        android:id="@+id/bottom_sheet_r_t"
+                        android:layout_weight="1"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:gravity="center_vertical"
+                        android:textSize="20dp"
+                        android:text="No"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"/>
+
+                </LinearLayout>
+
+
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+                <Button
+                    android:layout_marginBottom="50dp"
+                    android:layout_weight="2"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/cancel_rent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="10dp"
+                    android:text="Cancel"
+                    ></Button>
+
+
+
+            </LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+</LinearLayout>

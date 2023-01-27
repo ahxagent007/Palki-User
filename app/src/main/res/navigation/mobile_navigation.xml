@@ -16,6 +16,26 @@
         android:name="com.alphacuetech.xian.palki_drive.ui.profile.ProfileFragment"
         android:label="@string/menu_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/nav_rental"
+        android:name="com.alphacuetech.xian.palki_drive.ui.rental.RentalFragment"
+        android:label="Rental"
+        tools:layout="@layout/fragment_rental" />
+    <fragment
+        android:id="@+id/nav_bidding"
+        android:name="com.alphacuetech.xian.palki_drive.ui.bidding.BiddingFragment"
+        android:label="Bidding"
+        tools:layout="@layout/fragment_bidding" />
+    <fragment
+        android:id="@+id/nav_confirmation"
+        android:name="com.alphacuetech.xian.palki_drive.ui.confirmation.ConfirmationFragment"
+        android:label="Confirmation"
+        tools:layout="@layout/fragment_confirmation" />
+    <fragment
+        android:id="@+id/nav_rating"
+        android:name="com.alphacuetech.xian.palki_drive.ui.rating.RatingFragment"
+        android:label="Rating"
+        tools:layout="@layout/fragment_rating" />
 
     <fragment
         android:id="@+id/nav_about_us"

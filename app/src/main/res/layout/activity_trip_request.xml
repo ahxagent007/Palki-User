@@ -7,16 +7,12 @@
     tools:context=".Activities.TripRequestActivity"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:text="All Trips"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:fontFamily="monospace"
-        android:padding="5dp"
-        android:background="@color/yellow"/>
+    <include
+        layout="@layout/appbar_bhitore_gele"
+        >
+
+
+    </include>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"

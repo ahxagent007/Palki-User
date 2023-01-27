@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.BiddingOngoingActivity"
+    android:orientation="vertical"
+    >
+
+    <include
+        layout="@layout/action_bar_back_press"
+        ></include>
+
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/yellow"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:text="On Going"
+            android:textSize="20dp"
+
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </TextView>
+        <include
+
+            layout="@layout/waiting"
+            ></include>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".RetriveActivity"
+                android:orientation="horizontal"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lst"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:id="@+id/bottom_trip_review"
+            android:background="@drawable/roundedbg"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            >
+
+            <TextView
+                android:id="@+id/date_click_settext"
+                android:layout_weight="1"
+                android:layout_marginLeft="3dp"
+                android:gravity="center_vertical"
+                android:textSize="20dp"
+                android:text="Review"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/time_remain"
+                android:layout_weight="1"
+                android:layout_marginLeft="3dp"
+                android:gravity="center_vertical"
+                android:textSize="20dp"
+                android:text="Review"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+            </TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

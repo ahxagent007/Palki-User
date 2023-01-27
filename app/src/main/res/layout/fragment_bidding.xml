@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.bidding.BiddingFragment"
+    android:orientation="vertical"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Bidding Ongoing"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:background="@color/yellow"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <LinearLayout
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            >
+            <LinearLayout
+                android:id="@+id/prog"
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:background="#BDEF81"
+                android:orientation="vertical"
+                >
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context=".RetriveActivity"
+                android:orientation="horizontal"
+                >
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/lst"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+
+        </LinearLayout>
+        <LinearLayout
+
+            android:id="@+id/bottom_trip_review"
+            android:background="@drawable/roundedbg"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            >
+
+            <TextView
+                android:id="@+id/date_click_settext"
+                android:layout_weight="1"
+                android:layout_marginLeft="3dp"
+                android:gravity="center_vertical"
+                android:textSize="20dp"
+                android:text="Date"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+
+            </TextView>
+            <TextView
+                android:layout_marginRight="5dp"
+                android:layout_gravity="center"
+                android:background="@drawable/dropdown"
+                android:text=""
+                android:layout_width="25dp"
+                android:layout_height="25dp"></TextView>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

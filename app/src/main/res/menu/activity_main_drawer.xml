@@ -16,6 +16,30 @@
             android:icon="@drawable/ic_baseline_emoji_people_24"
             android:title="@string/menu_profile" />
     </group>
+    <group android:checkableBehavior="single" android:id="@+id/group_5">
+        <item
+            android:id="@+id/nav_rental"
+            android:icon="@drawable/ic_baseline_car_rental_24"
+            android:title="Rental" />
+    </group>
+    <group android:checkableBehavior="single" android:id="@+id/group_6">
+        <item
+            android:id="@+id/nav_bidding"
+            android:icon="@drawable/ic_baseline_emoji_people_24"
+            android:title="Bidding" />
+    </group>
+    <group android:checkableBehavior="single" android:id="@+id/group_7">
+        <item
+            android:id="@+id/nav_confirmation"
+            android:icon="@drawable/ic_baseline_emoji_people_24"
+            android:title="Confirmation" />
+    </group>
+    <group android:checkableBehavior="single" android:id="@+id/group_8">
+        <item
+            android:id="@+id/nav_rating"
+            android:icon="@drawable/ic_baseline_emoji_people_24"
+            android:title="Rating" />
+    </group>
 
     <group android:checkableBehavior="single" android:id="@+id/group_2">
         <item
